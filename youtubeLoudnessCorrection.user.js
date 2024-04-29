@@ -1,30 +1,36 @@
 // ==UserScript==
-// @name           Youtube Loudness Correction
+// @name           Youtube Loudness Correction Button
 // @description    Amplifies any youtube video with loudness lower than 0dB
 // @namespace      Septolum
 // @include        https://www.youtube.com/*
 // @include        https://m.youtube.com/*
 // @icon           https://www.youtube.com/favicon.ico
-// @version        1.2
+// @version        1.0.0
 // @grant          none
-// @run-at         idle
+// @run-at         document-end
 // ==/UserScript==
 
-// I created this script because Youtube does not amplify quiet videos, it only quietens loud ones
+function createButton() {
+  var button = document.createElement('button');
+  button.textContent = 'Correct Loudness';
+  button.style.position = 'fixed';
+  button.style.bottom = '10px';
+  button.style.left = '10px'; // Changed from right to left
+  button.style.zIndex = '1000';
+  button.onclick = gmMain;
+  document.body.appendChild(button);
+}
 
-// from: https://stackoverflow.com/a/18997637
-setInterval(function () {
-  if (this.lastHrefStr !== location.href || this.lastHrefStr === null) {
-    this.lastHrefStr = location.href;
-    console.log("page change");
-    gmMain();
+function resetGainNode() {
+  if (window["_gainNode"]) {
+    window["_gainNode"].gain.value = 1;
+    console.log("Loudness Reset");
   }
-}, 111);
+}
 
 function gmMain() {
   "use strict";
-
-  var req = new XMLHttpRequest();
+    var req = new XMLHttpRequest();
   req.open(
     "GET",
     "https://" +
@@ -64,3 +70,13 @@ function gmMain() {
     }
   }
 }
+
+// Run the createButton function when the page loads
+window.addEventListener('load', createButton);
+
+// Reset the gain node when the user navigates to a new video
+window.addEventListener('popstate', resetGainNode);
+window.addEventListener("spfdone", resetGainNode); // old youtube design
+window.addEventListener("yt-navigate-start", resetGainNode); // new youtube design
+document.addEventListener("DOMContentLoaded", resetGainNode); // one-time early processing
+window.addEventListener("load", resetGainNode); // one-time late postprocessing
