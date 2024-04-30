@@ -4,7 +4,7 @@
 // @include        https://www.youtube.com/*
 // @include        https://m.youtube.com/*
 // @icon           https://www.youtube.com/favicon.ico
-// @version        1.1.0
+// @version        1.1.1
 // @grant          none
 // @run-at         document-end
 // ==/UserScript==
@@ -71,13 +71,7 @@ function gmMain() {
     source.connect(gainNode);
     gainNode.connect(audioCtx.destination);
     window["_gainNode"] = gainNode;
-  } else {
-    if (window["_gainNode"]) {
-      console.log("Loudness Reset");
-      window["_gainNode"].gain.value = 1;
-      return;
-    }
-  }
+  } 
 }
 
 function runCreateButton() {
