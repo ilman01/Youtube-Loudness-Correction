@@ -4,7 +4,7 @@
 // @include        https://www.youtube.com/*
 // @include        https://m.youtube.com/*
 // @icon           https://www.youtube.com/favicon.ico
-// @version        1.1.1
+// @version        1.1.2
 // @grant          none
 // @run-at         document-end
 // ==/UserScript==
@@ -64,7 +64,7 @@ function gmMain() {
       return;
     }
     var v = document.querySelector("video");
-    var audioCtx = new AudioContext();
+    var audioCtx = new AudioContext({latencyHint: "playback"});
     var source = audioCtx.createMediaElementSource(v);
     var gainNode = audioCtx.createGain();
     gainNode.gain.value = loudness;
