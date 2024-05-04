@@ -2,9 +2,8 @@
 // @name           Youtube Loudness Correction Button
 // @description    Amplifies any youtube video with loudness lower than 0dB
 // @include        https://www.youtube.com/*
-// @include        https://m.youtube.com/*
 // @icon           https://www.youtube.com/favicon.ico
-// @version        1.1.2
+// @version        1.1.3
 // @grant          none
 // @run-at         document-end
 // ==/UserScript==
